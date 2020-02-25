@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const app = express();
 const mongoose = require('mongoose');
+const auth = require('./src/utils/auth/index');
 dotenv.config();
 
 mongoose.connect(process.env.MONGODBURL, {

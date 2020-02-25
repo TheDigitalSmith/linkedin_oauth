@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const plm = require('passport-local-mongoose');
 
 const experienceSchema = new mongoose.Schema({
     role: String,
@@ -41,6 +42,8 @@ const userSchema = new mongoose.Schema({
     },
     experiences:[experienceSchema]
 }, { timestamps: true})
+
+userSchema.plugin(plm);
 
 const userCollection = mongoose.model('users', userSchema);
 module.exports = userCollection;
