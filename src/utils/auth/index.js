@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
-const FbStrategy = require('passport-facebook').Strategy;
+// const FbStrategy = require('passport-facebook').Strategy;
+const FbStrategy = require('passport-facebook-token');
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const passport = require('passport');
 const userDb = require('../../models/users/index');
@@ -33,7 +34,22 @@ passport.use('fb', new FbStrategy({
 }, async(accessToken, refreshToken, facebookProfile, next)=>{
     console.log(accessToken);
     console.log(facebookProfile);
-    next()
+    try {
+        const user = await userDb.findOne({facebookId: facebookProfile.id});
+        if (user) return next(null, user)
+        else {
+            const newUser = await userDb.create({
+                username: facebbook.email[0].value,
+                facebookId: facebookProfile.id,
+                firstName: facebookProfile.name.givenName,
+                lastName: facebookProfile.name.familyName,
+                image: facebookProfile.photos[0].value
+            })
+        }
+    }catch(err){
+        console.log(err);
+        return next(err)
+    }
 }))
 
 module.exports = {
