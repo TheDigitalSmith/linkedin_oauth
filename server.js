@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const auth = require('./src/utils/auth/index');
 const userService = require('./src/routes/users/users');
+const passport = require('passport');
 dotenv.config();
 
 mongoose.connect(process.env.MONGODBURL, {
@@ -17,4 +18,5 @@ app.listen(port,()=>{
     console.log(`Server is launched at launchpad ${port}`)
 })
 app.use(express.json());
+app.use(passport.initialize());
 app.use('/users', userService );

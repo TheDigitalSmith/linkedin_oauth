@@ -28,4 +28,16 @@ router.post('/register',async(req,res)=>{
     }
 })
 
+//Logging in
+router.post('/signIn', passport.authenticate('local'), async(req,res)=>{
+    try {
+        console.log('signing user in');
+        const user = await userDb.findById(req.user._id);
+        res.json(user);
+    }catch(err){
+        console.log(err);
+        res.status(500).json(err);
+    }
+})
+
 module.exports = router;
