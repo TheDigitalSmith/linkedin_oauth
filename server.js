@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const app = express();
 const mongoose = require('mongoose');
 const auth = require('./src/utils/auth/index');
+const userService = require('./src/routes/users/users');
 dotenv.config();
 
 mongoose.connect(process.env.MONGODBURL, {
@@ -15,3 +16,5 @@ const port = process.env.PORT || 9994
 app.listen(port,()=>{
     console.log(`Server is launched at launchpad ${port}`)
 })
+app.use(express.json());
+app.use('/users', userService );
