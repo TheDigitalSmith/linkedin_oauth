@@ -53,7 +53,7 @@ passport.use('fb', new FbStrategy({
 }))
 
 module.exports = {
-    getToken : (userInfo) => {
-        jwt.sign(userInfo, process.env.TOKEN_KEY, {expiresIn:3600*24});
-    }
+    getToken : (userInfo) => 
+        jwt.sign(userInfo, jwtOpts.secretOrKey, {expiresIn:3600*24})
+    
 }
